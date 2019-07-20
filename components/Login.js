@@ -6,6 +6,7 @@ import {
 	ScrollView,
 	TextInput,
 	TouchableOpacity,
+	Image,
 	StatusBar
 } from "react-native";
 import * as firebase from "firebase";
@@ -15,6 +16,7 @@ export default class Login extends React.Component {
 		email: "",
 		password: ""
 	};
+
 	componentDidMount() {
 		StatusBar.setHidden(true);
 	}
@@ -34,6 +36,10 @@ export default class Login extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
+				<Image
+					style={{ width: 500, height: 250 }}
+					source={require("../assets/logo.png")}
+				/>
 				<View style={styles.inputContainer}>
 					<TextInput
 						placeholder="enter ur email"

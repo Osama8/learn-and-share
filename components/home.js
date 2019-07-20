@@ -7,8 +7,11 @@ import {
 	ScrollView,
 	TouchableOpacity,
 	StatusBar,
+	Dimensions,
 	FlatList
 } from "react-native";
+
+import * as firebase from "firebase";
 
 export default class Home extends React.Component {
 	handlePress = item => {
@@ -18,7 +21,17 @@ export default class Home extends React.Component {
 		});
 	};
 
+	componentWillMount() {
+		firebase.auth().onAuthStateChanged(user => {
+			if (!user) {
+				this.props.navigation.navigate("Login");
+			}
+		});
+	}
 	render() {
+		const dimensions = Dimensions.get("window");
+
+		const imagewidth = dimensions.width;
 		return (
 			<ScrollView contentContainerStyle={styles.container}>
 				<View style={styles.topBar}>
@@ -41,11 +54,14 @@ export default class Home extends React.Component {
 				<FlatList
 					keyExtractor={(item, index) => item.name}
 					data={courses}
-					style={{ backgroundColor: "yellow" }}
+					style={styles.flat}
 					renderItem={({ item }) => {
 						return (
 							<View>
-								<Image source={item.image} />
+								<Image
+									style={{ width: imagewidth }}
+									source={item.image}
+								/>
 								<Text
 									style={{ fontSize: 30, fontWeight: "bold" }}
 								>
@@ -78,11 +94,17 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderColor: "black",
 		borderWidth: 2
+	},
+	flat: {
+		flex: 1,
+		marginTop: 20,
+
+		flexDirection: "column",
+		backgroundColor: "#7FA3F6"
 	}
 });
 
 const courses = [
 	{ name: "Nesma", image: require("../assets/nesma.jpg") },
-	{name:'Dina', image:require('../assets/dina.jpg')}
-
+	{ name: "Dina", image: require("../assets/dina.jpg") }
 ];

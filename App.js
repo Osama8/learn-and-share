@@ -11,8 +11,7 @@ import History from "./components/history";
 import Profile from "./components/profile";
 import Info from "./components/info";
 import Login from "./components/Login";
-import SignUp from "./components/SignUp"
-
+import SignUp from "./components/SignUp";
 import * as firebase from "firebase";
 const firebaseConfig = {
   apiKey: "AIzaSyCRo7aEy3Myk4mMrKCzLLmpbJM4HNTnp-c",
@@ -34,12 +33,12 @@ const stackNavigator = createStackNavigator({
   home: Home,
   info: Info
 });
-const all=createSwitchNavigator({
-Login:Login,
-SignUp:SignUp,
-profile:Profile,
-  Main: tabs
-})
+const all = createSwitchNavigator({
+  Main: tabs,
+  Login: Login,
+  SignUp: SignUp,
+  profile: Profile
+});
 
 if (firebase.apps.length < 1) {
   firebase.initializeApp(firebaseConfig);

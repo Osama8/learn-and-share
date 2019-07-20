@@ -36,7 +36,7 @@ export default class Home extends React.Component {
 			<ScrollView contentContainerStyle={styles.container}>
 				<View style={styles.topBar}>
 					<TouchableOpacity style={styles.button}>
-						<Text>All</Text>
+						<Text>Alll</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.button}>
 						<Text>Programming</Text>

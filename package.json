@@ -14,9 +14,12 @@
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-elements": "^1.1.0",
+    "react-native-imagepicker": "^2.0.0",
+    "react-native-ionicons": "^4.6.1",
     "react-native-search-bar": "^3.4.2",
     "react-native-web": "^0.11.4",
-    "react-navigation": "^3.11.1"
+    "react-navigation": "^3.11.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.1.1"

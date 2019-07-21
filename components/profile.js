@@ -14,7 +14,9 @@ import * as firebase from "firebase";
 
 export default class Profile extends React.Component {
 	state = {
-		modalVisible: false
+		modalVisible: false,
+		modalVisible2: false,
+		modalVisible3: false
 	};
 	handelSettingPress = () => {
 		this.setState({ modalVisible: true });
@@ -22,13 +24,20 @@ export default class Profile extends React.Component {
 	handelDone = () => {
 		this.setState({ modalVisible: false });
 	};
+	handelcontPress = () => {
+		this.setState({ modalVisible2: true });
+	};
+	handelone = () => {
+		this.setState({ modalVisible2: false });
+	};
+
 	logout = () => {
 		firebase
 			.auth()
 			.signOut()
 			.then(() => {
 				alert("You logged out");
-				this.props.navigation.navigate("Login");
+				this.props.navigation.navigate("}>Login");
 			})
 			.catch(function(error) {
 				console.log(error);
@@ -39,7 +48,10 @@ export default class Profile extends React.Component {
 	render() {
 		return (
 			<ScrollView contentContainerStyle={styles.container}>
-				<Image source={require("../assets/dina.jpg")} />
+				<Image
+					style={styles.circle}
+					source={require("../assets/dina.jpg")}
+				/>
 				<Text>username</Text>
 				<TouchableOpacity
 					onPress={() => {
@@ -63,13 +75,13 @@ export default class Profile extends React.Component {
 				</Modal>
 				<TouchableOpacity
 					onPress={() => {
-						this.handelSettingPress();
+						this.handelcontPress();
 					}}
 					style={styles.button}
 				>
 					<Text>Contact us</Text>
 				</TouchableOpacity>
-				<Modal animationType="slide" visible={this.state.modalVisible}>
+				<Modal animationType="slide" visible={this.state.modalVisible2}>
 					<View style={styles.container}>
 						<TouchableOpacity style={styles.button}>
 							<Text>About us</Text>
@@ -78,7 +90,7 @@ export default class Profile extends React.Component {
 						<TouchableOpacity
 							style={styles.button}
 							onPress={() => {
-								this.handelDone();
+								this.handelone();
 							}}
 						>
 							<Text> Done !</Text>
@@ -87,25 +99,12 @@ export default class Profile extends React.Component {
 				</Modal>
 				<TouchableOpacity
 					onPress={() => {
-						this.handelSettingPress();
+						this.logout();
 					}}
 					style={styles.button}
-					onPress={this.logout}
 				>
 					<Text>log out</Text>
 				</TouchableOpacity>
-				<Modal animationType="slide" visible={this.state.modalVisible}>
-					<View style={styles.container}>
-						<TouchableOpacity
-							style={styles.button}
-							onPress={() => {
-								this.handelDone();
-							}}
-						>
-							<Text> Done !</Text>
-						</TouchableOpacity>
-					</View>
-				</Modal>
 			</ScrollView>
 		);
 	}
@@ -122,5 +121,11 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderColor: "blue",
 		borderWidth: 2
+	},
+	circle: {
+		width: 100,
+		height: 100,
+		backgroundColor: "red",
+		borderRadius: 50
 	}
 });

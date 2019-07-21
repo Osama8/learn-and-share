@@ -62,7 +62,6 @@ export default class SignUp extends React.Component {
 							this.setState({ userName: userName })
 						}
 						value={this.state.userName}
-						secureTextEntry={true}
 					/>
 				</View>
 				<View style={styles.inputContainer}>

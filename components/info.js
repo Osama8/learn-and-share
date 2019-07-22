@@ -17,6 +17,7 @@ export default class Info extends React.Component {
       <View style={styles.container}>
         <Text>{item.name}</Text>
         <Image source={item.image} />
+        <Text>{item.detail}</Text>
       </View>
     );
   }
@@ -30,4 +31,4 @@ const styles = StyleSheet.create({
     marginTop: 20
   }
 });
-const students = [{ name: "Nesma", image: require("../assets/nesma.jpg") }];
+

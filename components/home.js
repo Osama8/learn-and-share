@@ -17,7 +17,9 @@ export default class Home extends React.Component {
 	handlePress = item => {
 		this.props.navigation.navigate("info", {
 			name: item.name,
-			image: item.image
+			image: item.image,
+			category: item.category,
+			detail: item.detail
 		});
 	};
 
@@ -111,15 +113,19 @@ const styles = StyleSheet.create({
 const courses = [
 	{
 		name: "Financial Accounting Made Fun",
-		image: require("../assets/accounting.jpg")
+		image: require("../assets/accounting.jpg"),
+		detail:
+			"iuhrtogsuhgaijeorgjefjnrhigjefwnbhrgjinbgjgsjgiaokmljsnjgisjknshgjimvknj"
 	},
 	{
 		name: "Healthcare Administration Comprehensive Exam",
-		image: require("../assets/administration.jpg")
+		image: require("../assets/administration.jpg"),
+		category: "Administration"
 	},
 	{ name: "Machine Learning", image: require("../assets/machine.jpeg") },
 	{
 		name: "CS50's Introduction to Computer Science",
-		image: require("../assets/programming.png")
+		image: require("../assets/programming.png"),
+		category: "Programming"
 	}
 ];

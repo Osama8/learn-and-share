@@ -16,7 +16,6 @@ export default class Profile extends React.Component {
 	state = {
 		modalVisible: false,
 		modalVisible2: false,
-		modalVisible3: false,
 		profPic: "",
 		userName: ""
 	};
@@ -51,7 +50,7 @@ export default class Profile extends React.Component {
 		const user = firebase.auth().currentUser;
 		this.setState({
 			profPic: user.photoURL,
-			userName: user.userName
+			userName: user.displayName
 		});
 	}
 

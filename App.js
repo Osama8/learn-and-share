@@ -13,7 +13,6 @@ import Profile from "./components/profile";
 import Info from "./components/info";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import uploading from "./components/uploading";
 
 import * as firebase from "firebase";
 const firebaseConfig = {

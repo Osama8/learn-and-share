@@ -15,7 +15,7 @@ import * as firebase from "firebase";
 
 export default class Home extends React.Component {
 	handlePress = item => {
-		this.props.navigation.navigate("Detail", {
+		this.props.navigation.navigate("info", {
 			name: item.name,
 			image: item.image
 		});
@@ -58,10 +58,14 @@ export default class Home extends React.Component {
 					renderItem={({ item }) => {
 						return (
 							<View>
-								<Image
-									style={{ width: imagewidth }}
-									source={item.image}
-								/>
+								<TouchableOpacity
+									onPress={() => this.handlePress(item)}
+								>
+									<Image
+										style={{ width: imagewidth }}
+										source={item.image}
+									/>
+								</TouchableOpacity>
 								<Text
 									style={{ fontSize: 30, fontWeight: "bold" }}
 								>
@@ -105,6 +109,17 @@ const styles = StyleSheet.create({
 });
 
 const courses = [
-	{ name: "Nesma", image: require("../assets/nesma.jpg") },
-	{ name: "Dina", image: require("../assets/dina.jpg") }
+	{
+		name: "Financial Accounting Made Fun",
+		image: require("../assets/accounting.jpg")
+	},
+	{
+		name: "Healthcare Administration Comprehensive Exam",
+		image: require("../assets/administration.jpg")
+	},
+	{ name: "Machine Learning", image: require("../assets/machine.jpeg") },
+	{
+		name: "CS50's Introduction to Computer Science",
+		image: require("../assets/programming.png")
+	}
 ];

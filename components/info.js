@@ -4,6 +4,7 @@ import {
   Text,
   View,
   Image,
+  ScrollView,
   TouchableOpacity,
   Modal,
   TextInput,
@@ -15,9 +16,11 @@ export default class Info extends React.Component {
     console.log(item);
     return (
       <View style={styles.container}>
-        <Text>{item.name}</Text>
-        <Image source={item.image} />
-        <Text>{item.detail}</Text>
+        <ScrollView>
+          <Text>{item.name}</Text>
+          <Image source={item.image} />
+          <Text>{item.detail}</Text>
+        </ScrollView>
       </View>
     );
   }
@@ -31,4 +34,3 @@ const styles = StyleSheet.create({
     marginTop: 20
   }
 });
-

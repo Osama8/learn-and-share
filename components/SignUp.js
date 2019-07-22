@@ -7,14 +7,23 @@ import {
 	TextInput,
 	Image,
 	returnKeyType,
+	PermissionsAndroid,
+	CameraRoll,
 	TouchableOpacity
 } from "react-native";
+import { Permissions } from "expo";
+//import ImagePicker from "react-native-image-picker";
+import * as ImagePicker from "expo-image-picker";
+import uuid from "uuid";
+
 import * as firebase from "firebase";
 
 export default class SignUp extends React.Component {
 	state = {
 		email: "",
-		password: ""
+		password: "",
+		userName: "",
+		profPic: ""
 	};
 
 	SignUp = () => {
@@ -25,8 +34,7 @@ export default class SignUp extends React.Component {
 				this.state.password
 			)
 			.then(() => {
-				alert("You'll automaticlly moved to login page");
-				this.props.navigation.navigate("Login");
+				this.publish();
 			})
 			.catch(error => {
 				if (error.code == "auth/email-already-in-use") {
@@ -37,6 +45,69 @@ export default class SignUp extends React.Component {
 					alert(error.message);
 				}
 			});
+	};
+
+	publish = () => {
+		const imageUri = this.state.profPic;
+		this.uploadImage(imageUri)
+			.then(downloadURL => {
+				console.log(downloadURL);
+				const user = firebase.auth().currentUser;
+				if (user) {
+					user.updateProfile({
+						displayName: this.state.userName,
+						photoURL: downloadURL
+					})
+						.then(() => {
+							alert("successfully updated profile picture");
+							this.props.navigation.navigate("Login");
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			})
+			.catch(error => {
+				alert("Published failed.");
+			});
+	};
+
+	uploadImage = uri => {
+		const imagesRef = firebase
+			.storage()
+			.ref()
+			.child("images")
+			.child(uuid.v4());
+		const downloadURLPromise = new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			xhr.onload = function() {
+				const blob = xhr.response;
+				var uploadTask = imagesRef.put(blob);
+				uploadTask.then(snapshot => {
+					snapshot.ref.getDownloadURL().then(function(downloadURL) {
+						resolve(downloadURL);
+					});
+				});
+			};
+			xhr.responseType = "blob";
+			xhr.open("GET", uri, true);
+			xhr.send(null);
+		});
+		return downloadURLPromise;
+	};
+
+	selectImage = async () => {
+		let result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			allowsEditing: true,
+			aspect: [4, 3]
+		});
+
+		if (result.cancelled != true) {
+			this.setState({
+				profPic: result.uri
+			});
+		}
 	};
 	render() {
 		return (
@@ -76,6 +147,10 @@ export default class SignUp extends React.Component {
 					/>
 				</View>
 
+				<TouchableOpacity onPress={this.selectImage}>
+					<Text> Add Profile picture </Text>
+				</TouchableOpacity>
+
 				<TouchableOpacity
 					style={[styles.buttonContainer, styles.signupButton]}
 					onPress={this.SignUp}
@@ -93,6 +168,19 @@ export default class SignUp extends React.Component {
 		);
 	}
 }
+// ImagePicker.showImagePicker(null, response => {
+// 	if (response.didCancel) {
+// 		console.log("User cancelled image picker");
+// 	} else if (response.error) {
+// 		console.log("ImagePicker Error:", response.error);
+// 	} else {
+// 		const source = { uri: response.uri };
+// 		this.setState({
+// 			profPic: source
+// 		});
+// 	}
+// });
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,

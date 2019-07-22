@@ -25,9 +25,14 @@ const firebaseConfig = {
   appId: "1:1016223804725:web:cd31773c5ff94c4f"
 };
 
+const stackNavigator = createStackNavigator({
+  home: Home,
+  info: Info
+});
+
 const tabs = createBottomTabNavigator({
-  Home: {
-    screen: Home,
+  HomeStack: {
+    screen: stackNavigator,
     navigationOptions: () => ({
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-home" color={tintColor} size={24} />
@@ -62,15 +67,10 @@ const tabs = createBottomTabNavigator({
   }
 });
 
-const stackNavigator = createStackNavigator({
-  home: Home,
-  info: Info
-});
 const all = createSwitchNavigator({
   Main: tabs,
   Login: Login,
-  SignUp: SignUp,
-  profile: Profile
+  SignUp: SignUp
 });
 
 if (firebase.apps.length < 1) {

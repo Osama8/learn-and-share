@@ -16,7 +16,9 @@ export default class Profile extends React.Component {
 	state = {
 		modalVisible: false,
 		modalVisible2: false,
-		modalVisible3: false
+		modalVisible3: false,
+		profPic: "",
+		userName: ""
 	};
 	handelSettingPress = () => {
 		this.setState({ modalVisible: true });
@@ -37,7 +39,7 @@ export default class Profile extends React.Component {
 			.signOut()
 			.then(() => {
 				alert("You logged out");
-				this.props.navigation.navigate("}>Login");
+				this.props.navigation.navigate("Login");
 			})
 			.catch(function(error) {
 				console.log(error);
@@ -45,14 +47,22 @@ export default class Profile extends React.Component {
 			});
 	};
 
+	componentDidMount() {
+		const user = firebase.auth().currentUser;
+		this.setState({
+			profPic: user.photoURL,
+			userName: user.userName
+		});
+	}
+
 	render() {
 		return (
 			<ScrollView contentContainerStyle={styles.container}>
 				<Image
 					style={styles.circle}
-					source={require("../assets/dina.jpg")}
+					source={{ uri: this.state.profPic }}
 				/>
-				<Text>username</Text>
+				<Text>{this.state.userName}</Text>
 				<TouchableOpacity
 					onPress={() => {
 						this.handelSettingPress();

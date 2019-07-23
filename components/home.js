@@ -14,12 +14,24 @@ import {
 import * as firebase from "firebase";
 
 export default class Home extends React.Component {
+	state = {
+		coursesToShow: courses
+	};
+
 	handlePress = item => {
 		this.props.navigation.navigate("info", {
 			name: item.name,
 			image: item.image,
 			category: item.category,
 			detail: item.detail
+		});
+	};
+
+	handleFilterPress = category => {
+		this.setState({
+			coursesToShow: courses.filter(
+				course => course.category === category
+			)
 		});
 	};
 
@@ -37,39 +49,66 @@ export default class Home extends React.Component {
 		return (
 			<ScrollView contentContainerStyle={styles.container}>
 				<View style={styles.topBar}>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => {
+							this.setState({
+								coursesToShow: courses
+							});
+						}}
+					>
 						<Text>All</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => this.handleFilterPress("Programming")}
+					>
 						<Text>Programming</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => this.handleFilterPress("Administration")}
+					>
 						<Text>Administration</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => this.handleFilterPress("Accounting")}
+					>
 						<Text>Accounting</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => this.handleFilterPress("Designing")}
+					>
 						<Text>Designing</Text>
 					</TouchableOpacity>
 				</View>
 				<FlatList
 					keyExtractor={(item, index) => item.name}
-					data={courses}
-					style={styles.flat}
+					data={this.state.coursesToShow}
 					renderItem={({ item }) => {
 						return (
-							<View>
+							<View styles={styles.flat}>
 								<TouchableOpacity
 									onPress={() => this.handlePress(item)}
 								>
 									<Image
-										style={{ width: imagewidth }}
+										style={{
+											width: 400,
+											height: 200,
+											marginTop: 10
+										}}
 										source={item.image}
 									/>
 								</TouchableOpacity>
 								<Text
-									style={{ fontSize: 30, fontWeight: "bold" }}
+									style={{
+										fontSize: 30,
+										fontWeight: "bold",
+										color: "white",
+										marginBottom: 30
+									}}
 								>
 									{item.name}
 								</Text>
@@ -85,7 +124,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		marginTop: 20,
-		backgroundColor: "#fff",
+		backgroundColor: "#00b5ec",
 		alignItems: "flex-start",
 		justifyContent: "flex-start",
 		flexDirection: "column"
@@ -96,16 +135,19 @@ const styles = StyleSheet.create({
 		flexDirection: "row"
 	},
 	button: {
-		backgroundColor: "#00FFFF",
+		backgroundColor: "grey",
 		padding: 10,
-		borderColor: "black",
+		borderColor: "#00b5ec",
 		borderWidth: 2
 	},
 	flat: {
 		flex: 1,
 		marginTop: 20,
+		marginBottom: 50,
+		alignItems: "center",
 
 		flexDirection: "column",
+		padding: 10,
 		backgroundColor: "#7FA3F6"
 	}
 });
@@ -117,7 +159,7 @@ const courses = [
 		category: "Accounting"
 	},
 	{
-		name: "Healthcare Administration Comprehensive Exam",
+		name: "Healthcare Administration Comprehensive Exam1",
 		image: require("../assets/administration.jpg"),
 		category: "Administration"
 	},
@@ -132,6 +174,7 @@ const courses = [
 	{
 		name: "Computer Science and Mobile Apps",
 		image: require("../assets/cs.jpg"),
+		category: "Programming",
 		detail:
 			"Whether it’s finding a good spot for lunch, posting a photo of that lunch on Instagram, or just getting some work done while on the go, mobile apps have become deeply ingrained in how we live, work, and play. Smartphones have become ubiquitous and the potential to make a dramatic impact on the everyday lives of millions of people has never been greater — but where do you start? How do you go from being a user to a skilled creator? What do you need to know and how do you learn it all?\
 	The CS50 courses at Harvard have taught the art of programming to computer science majors and non-majors alike, to those with serious coding chops and those with no prior computer programming experience. Led by Professor David J. Malan, this program teaches learners how to think algorithmically and solve problems efficiently. The core Introduction to Computer Science course will give you a broad and robust understanding of the fundamentals of programming and computer systems. Then you’ll build on those fundamentals to learn about mobile app development using the React Native Framework.\
@@ -140,7 +183,8 @@ const courses = [
 
 	{
 		name: "Accounting for Decision-Making",
-		image: require("acc.jpg"),
+		image: require("../assets/acc.jpg"),
+		category: "Accounting",
 		detail:
 			"Week 1: Mechanics of Financial Accounting\
 Introduction to financial accounting; Generally Accepted Accounting Principles; fundamental accounting equation; recording of financial transactions and preparation of accounting statements through accounting equation.\
@@ -156,9 +200,9 @@ Week 6: Budgeting and variance analysis\
 Preparation of operational and financial budgets; Comparing actual performance against budgets; Price and quantity variance; Controllable and non-controllable variance; Revenue and contribution variances."
 	},
 	{
-		name:
-			"Designing and Leading Learning Systems Designing and Leading Learning Systems",
-		image: require("design.jpg"),
+		name: "Designing and Leading Learning Systems",
+		image: require("../assets/design.jpg"),
+		category: "Designing",
 		detail:
 			"Pursuing goals for ambitious teaching and learning requires that students, teachers, and educational leaders learn to work together in new ways. This course engages learners in exploring four leading logics of educational innovation: strategies and approaches to producing and using knowledge to improve educational practice and outcomes at scale, across many classrooms, schools, and systems. These logics include:\
 Shell enterprises\
@@ -172,7 +216,8 @@ This course is part of the Leading Educational Innovation and Improvement MicroM
 	},
 	{
 		name: "Healthcare Administration Comprehensive Exam",
-		image: require("admin.png"),
+		image: require("../assets/admin.png"),
+		category: "Administration",
 		detail:
 			"This course is part of the Healthcare Administration MicroMasters program which consists of 7 courses and a capstone exam. After completing the program, you can also apply to Doane University to complete your MBA online for approximately $10,500 (learn more about the program here).\
 This capstone exam includes the evaluation of the competencies and performance tasks, which define a successful healthcare administrator.\
@@ -180,8 +225,9 @@ This capstone exam is part of the DoaneX Healthcare Administration MicroMasters 
 The capstone exam will test knowledge across all seven courses. It will be a webcam proctored timed exam."
 	},
 	{
-		name: "Instructional Design Models Instructional Design Models",
-		image: require("des.jpg"),
+		name: "Instructional Design Models",
+		image: require("../assets/des.jpg"),
+		category: "Designing",
 		detail:
 			"In today’s interconnected world, online education has exploded with engaging learning experiences infused with interactive digital tools, digital media, and collaborative projects designed to engage dispersed learners. These highly engaging and effective courses are not created by chance - they are created by instructional designers using a careful and systematic design process.\
 In this education and teacher training course, part of the Instructional Design and Technology MicroMasters Program we will look at the history and evolution of online learning. You will explore traditional instructional design models and the progression of the learning design approach to creating online learning experiences. During the instructional design process, it’s important to collaborate and work with the many stakeholders involved in the planning and design, especially subject matter experts.\

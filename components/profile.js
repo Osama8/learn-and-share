@@ -62,6 +62,7 @@ export default class Profile extends React.Component {
 					source={{ uri: this.state.profPic }}
 				/>
 				<Text>{this.state.userName}</Text>
+
 				<TouchableOpacity
 					onPress={() => {
 						this.handelSettingPress();
@@ -72,6 +73,19 @@ export default class Profile extends React.Component {
 				</TouchableOpacity>
 				<Modal animationType="slide" visible={this.state.modalVisible}>
 					<View style={styles.container}>
+						<TouchableOpacity style={styles.button}>
+							<Text>About us</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.button}>
+							<Text>Notifications</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.button}>
+							<Text>Report a problem</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.button}>
+							<Text>Favorite</Text>
+						</TouchableOpacity>
+
 						<TouchableOpacity
 							style={styles.button}
 							onPress={() => {
@@ -82,20 +96,17 @@ export default class Profile extends React.Component {
 						</TouchableOpacity>
 					</View>
 				</Modal>
+
 				<TouchableOpacity
 					onPress={() => {
 						this.handelcontPress();
 					}}
 					style={styles.button}
 				>
-					<Text>Contact us</Text>
+					<Text>Contact </Text>
 				</TouchableOpacity>
 				<Modal animationType="slide" visible={this.state.modalVisible2}>
 					<View style={styles.container}>
-						<TouchableOpacity style={styles.button}>
-							<Text>About us</Text>
-						</TouchableOpacity>
-
 						<TouchableOpacity
 							style={styles.button}
 							onPress={() => {
@@ -127,9 +138,10 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		backgroundColor: "#F67FE6",
-		padding: 10,
 		borderColor: "blue",
-		borderWidth: 2
+		borderWidth: 2,
+		padding: 30,
+		paddingRight: 30
 	},
 	circle: {
 		width: 100,

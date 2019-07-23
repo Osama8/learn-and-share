@@ -25,14 +25,29 @@ const firebaseConfig = {
   appId: "1:1016223804725:web:cd31773c5ff94c4f"
 };
 
-const stackNavigator = createStackNavigator({
-  home: Home,
+const homeStack = createStackNavigator({
+  home: {
+    screen: Home,
+    navigationOptions: {
+      header: null
+    }
+  },
   info: Info
+});
+
+const searchStack = createStackNavigator({
+  search: {
+    screen: Search,
+    navigationOptions: {
+      header: null
+    }
+  },
+  searchInfo: Info
 });
 
 const tabs = createBottomTabNavigator({
   HomeStack: {
-    screen: stackNavigator,
+    screen: homeStack,
     navigationOptions: () => ({
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-home" color={tintColor} size={24} />
@@ -41,21 +56,21 @@ const tabs = createBottomTabNavigator({
   },
 
   Search: {
-    screen: Search,
+    screen: searchStack,
     navigationOptions: () => ({
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-search" color={tintColor} size={24} />
       )
     })
   },
-  History: {
-    screen: History,
-    navigationOptions: () => ({
-      tabBarIcon: ({ tintColor }) => (
-        <Ionicons name="ios-refresh" color={tintColor} size={24} />
-      )
-    })
-  },
+  // History: {
+  //   screen: History,
+  //   navigationOptions: () => ({
+  //     tabBarIcon: ({ tintColor }) => (
+  //       <Ionicons name="ios-refresh" color={tintColor} size={24} />
+  //     )
+  //   })
+  // },
 
   Profile: {
     screen: Profile,

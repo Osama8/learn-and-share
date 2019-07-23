@@ -15,22 +15,30 @@ export default class Info extends React.Component {
     const item = this.props.navigation.state.params;
     console.log(item);
     return (
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <ScrollView>
-          <Text>{item.name}</Text>
-          <Image source={item.image} />
-          <Text>{item.detail}</Text>
+          <Text style={{ color: "white" }}>{item.name}</Text>
+          <Image
+            style={{
+              width: 400,
+              height: 200,
+              marginTop: 10
+            }}
+            source={item.image}
+          />
+          <Text style={{ color: "white" }}>{item.detail}</Text>
         </ScrollView>
-      </View>
+      </ScrollView>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'pink',
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20
+    marginTop: 20,
+    backgroundColor: "black",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    flexDirection: "column"
   }
 });

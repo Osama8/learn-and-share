@@ -72,6 +72,8 @@ export default class SignUp extends React.Component {
 			});
 	};
 
+	componentWillMount() {}
+
 	uploadImage = uri => {
 		const imagesRef = firebase
 			.storage()
@@ -109,6 +111,28 @@ export default class SignUp extends React.Component {
 			});
 		}
 	};
+
+	getPermissions = async () => {
+		const { status: existingStatus } = await Permissions.getAsync(
+			Permissions.CAMERA_ROLL,
+			Permissions.CAMERA
+		);
+		var finalStatus = existingStatus;
+		if (existingStatus !== "granted") {
+			const { status } = await Permissions.askAsync(
+				Permissions.CAMERA_ROLL,
+				Permissions.CAMERA
+			);
+			finalStatus = status;
+		}
+		if (finalStatus !== "granted") {
+			alert("Sorry, we need camera roll permissions to select photos!");
+		}
+	};
+
+	componentDidMount() {
+		this.getPermissions();
+	}
 	render() {
 		return (
 			<View style={styles.container}>

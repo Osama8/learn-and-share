@@ -32,12 +32,19 @@ export default class Search extends React.Component {
 			)
 		});
 	};
-
+	handlePress = item => {
+		this.props.navigation.navigate("searchInfo", {
+			name: item.name,
+			image: item.image,
+			category: item.category,
+			detail: item.detail
+		});
+	};
 	render() {
 		const { search } = this.state;
 
 		return (
-			<View>
+			<ScrollView contentContainerStyle={styles.container}>
 				<SearchBar
 					placeholder="Type Here..."
 					onChangeText={this.updateSearch}
@@ -56,7 +63,8 @@ export default class Search extends React.Component {
 									<Text
 										style={{
 											fontSize: 30,
-											fontWeight: "bold"
+											fontWeight: "bold",
+											color: "white"
 										}}
 									>
 										{item.name}
@@ -66,24 +74,74 @@ export default class Search extends React.Component {
 						}}
 					/>
 				) : (
-					<View>
-						<Text style={{ fontSize: 24 }}>Trends for You</Text>
-						<Image
-							source={require("../assets/administration.jpg")}
-							style={{ width: 150, height: 150 }}
-						/>
-						<Text style={{ textAlign: "center", marginTop: 50 }}>
-							Topic:Administration
+					<View style={styles.container}>
+						<Text style={{ fontSize: 24, color: "white" }}>
+							Trends for You
 						</Text>
-						<Image source={require("../assets/accounting.jpg")} />
-						<Text>Topic:Accounting</Text>
+
+						<TouchableOpacity
+							onPress={() => this.handlePress(courses[1])}
+							style={styles.flat}
+						>
+							<Image
+								source={require("../assets/administration.jpg")}
+								style={{ width: 150, height: 150 }}
+							/>
+							<Text style={{ color: "white", margin: 10 }}>
+								Topic:Administration {"\n"}
+								Views: 185k
+							</Text>
+						</TouchableOpacity>
+						<View style={styles.flat}>
+							<TouchableOpacity
+								onPress={() => this.handlePress(courses[0])}
+								style={styles.flat}
+							>
+								<Image
+									style={{ width: 150, height: 150 }}
+									source={require("../assets/accounting.jpg")}
+								/>
+								<Text style={{ color: "white", margin: 10 }}>
+									Topic:Accounting {"\n"}
+									Views: 15k
+								</Text>
+							</TouchableOpacity>
+						</View>
+						<View style={styles.flat}>
+							<TouchableOpacity
+								onPress={() => this.handlePress(courses[2])}
+								style={styles.flat}
+							>
+								<Image
+									style={{ width: 150, height: 150 }}
+									source={require("../assets/programming.png")}
+								/>
+								<Text style={{ color: "white", margin: 10 }}>
+									Topic:Programming {"\n"}
+									Views: 4k
+								</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
 				)}
-			</View>
+			</ScrollView>
 		);
 	}
 }
-
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		marginTop: 20,
+		backgroundColor: "black",
+		flexDirection: "column"
+	},
+	flat: {
+		flex: 1,
+		marginTop: 20,
+		flexDirection: "row",
+		padding: 10
+	}
+});
 const courses = [
 	{
 		name: "Financial Accounting Made Fun",
